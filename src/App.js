@@ -6,8 +6,8 @@ import './App.css';
 
 const initialNodes = [
   { id: 1, name: 'City A', position: { x: 100, y: 100 } },
-  { id: 2, name: 'City B', position: { x: 300, y: 100 } },
-  { id: 3, name: 'City C', position: { x: 500, y: 100 } }
+  { id: 2, name: 'City B', position: { x: 100, y: 200 } },
+  { id: 3, name: 'City C', position: { x: 100, y: 300 } }
 ];
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
     const newNode = {
       id: nodes.length ? Math.max(...nodes.map(node => node.id)) + 1 : 1,
       name: newCityName,
-      position: { x: lastNode ? lastNode.position.x + 200 : 100, y: 100 } // Initial position for new node to the right of the last node
+      position: { x: 100, y: lastNode ? lastNode.position.y + 100 : 100 } // Initial position for new node below the last node
     };
     setNodes([...nodes, newNode]);
     setNewCityName("");
@@ -49,7 +49,7 @@ function App() {
     const updatedNodes = nodes.filter(node => node.id !== id);
     const repositionedNodes = updatedNodes.map((node, index) => ({
       ...node,
-      position: { x: 100 + index * 200, y: 100 }
+      position: { x: 100, y: 100 + index * 100 }
     }));
     setNodes(repositionedNodes);
   };
