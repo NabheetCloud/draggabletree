@@ -27,9 +27,9 @@ function App() {
     const updatedNodes = [...nodes];
     const [draggedNode] = updatedNodes.splice(draggedIndex, 1);
     updatedNodes.splice(hoverIndex, 0, draggedNode);
-    var a = updatedNodes[hoverIndex].position.x;
-    updatedNodes[hoverIndex].position.x = updatedNodes[draggedIndex].position.x
-    updatedNodes[draggedIndex].position.x = a;
+    var a = updatedNodes[hoverIndex].position.y;
+    updatedNodes[hoverIndex].position.y = updatedNodes[draggedIndex].position.y
+    updatedNodes[draggedIndex].position.y = a;
     setNodes(updatedNodes);
   };
 
