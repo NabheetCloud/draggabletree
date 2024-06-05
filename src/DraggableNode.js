@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-const DraggableNode = ({ node, moveNode, reorderNodes, deleteNode }) => {
+const DraggableNode = ({ node, moveNode, reorderNodes, deleteNode, updateNodeInput, updateNodeDropdown, updateNodeName }) => {
   const ref = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -39,11 +39,10 @@ const DraggableNode = ({ node, moveNode, reorderNodes, deleteNode }) => {
     opacity: isDragging ? 0.5 : 1,
     backgroundColor: '#007bff',
     border: '1px solid #0056b3',
-    width: '100px',
-    height: '50px',
+    width: '500px',
+    height: '100px',
     color: '#ffffff',
     textAlign: 'center',
-    lineHeight: '50px', // Center text vertically
     borderRadius: '8px',
     transition: 'transform 0.2s, background-color 0.2s',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
@@ -67,14 +66,39 @@ const DraggableNode = ({ node, moveNode, reorderNodes, deleteNode }) => {
   };
 
   return (
-    <foreignObject x={node.position.x} y={node.position.y} width={100} height={50}>
+    <foreignObject x={node.position.x} y={node.position.y} width={500} height={100}>
       <div 
         ref={ref} 
         style={nodeStyle} 
         onMouseEnter={() => setIsHovered(true)} 
         onMouseLeave={() => setIsHovered(false)}
       >
-        {node.name}
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', height: '100%' }}>
+          <input 
+            type="text" 
+            value={node.name} 
+            onChange={(e) => updateNodeName(node.id, e.target.value)} 
+            placeholder="Enter city name" 
+            style={{ width: '30%', padding: '5px' }}
+          />
+          <input 
+            type="text" 
+            value={node.input} 
+            onChange={(e) => updateNodeInput(node.id, e.target.value)} 
+            placeholder="Enter text" 
+            style={{ width: '30%', padding: '5px' }}
+          />
+          <select 
+            value={node.dropdown} 
+            onChange={(e) => updateNodeDropdown(node.id, e.target.value)} 
+            style={{ width: '30%', padding: '5px' }}
+          >
+            <option value="">Select</option>
+            <option value="Option 1">Option 1</option>
+            <option value="Option 2">Option 2</option>
+            <option value="Option 3">Option 3</option>
+          </select>
+        </div>
         {isHovered && (
           <button 
             style={deleteButtonStyle}

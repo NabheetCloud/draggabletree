@@ -5,9 +5,9 @@ import NodeGraph from './NodeGraph';
 import './App.css';
 
 const initialNodes = [
-  { id: 1, name: 'City A', position: { x: 100, y: 100 } },
-  { id: 2, name: 'City B', position: { x: 100, y: 200 } },
-  { id: 3, name: 'City C', position: { x: 100, y: 300 } }
+  { id: 1, name: 'City A', position: { x: 100, y: 100 }, input: '', dropdown: '' },
+  { id: 2, name: 'City B', position: { x: 100, y: 250 }, input: '', dropdown: '' },
+  { id: 3, name: 'City C', position: { x: 100, y: 400 }, input: '', dropdown: '' }
 ];
 
 function App() {
@@ -39,7 +39,9 @@ function App() {
     const newNode = {
       id: nodes.length ? Math.max(...nodes.map(node => node.id)) + 1 : 1,
       name: newCityName,
-      position: { x: 100, y: lastNode ? lastNode.position.y + 100 : 100 } // Initial position for new node below the last node
+      position: { x: 100, y: lastNode ? lastNode.position.y + 150 : 100 }, // Initial position for new node below the last node
+      input: '',
+      dropdown: ''
     };
     setNodes([...nodes, newNode]);
     setNewCityName("");
@@ -49,16 +51,37 @@ function App() {
     const updatedNodes = nodes.filter(node => node.id !== id);
     const repositionedNodes = updatedNodes.map((node, index) => ({
       ...node,
-      position: { x: 100, y: 100 + index * 100 }
+      position: { x: 100, y: 100 + index * 150 }
     }));
     setNodes(repositionedNodes);
+  };
+
+  const updateNodeInput = (id, value) => {
+    const updatedNodes = nodes.map(node =>
+      node.id === id ? { ...node, input: value } : node
+    );
+    setNodes(updatedNodes);
+  };
+
+  const updateNodeDropdown = (id, value) => {
+    const updatedNodes = nodes.map(node =>
+      node.id === id ? { ...node, dropdown: value } : node
+    );
+    setNodes(updatedNodes);
+  };
+
+  const updateNodeName = (id, value) => {
+    const updatedNodes = nodes.map(node =>
+      node.id === id ? { ...node, name: value } : node
+    );
+    setNodes(updatedNodes);
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="App">
         <div className="node-container">
-          <NodeGraph nodes={nodes} moveNode={moveNode} reorderNodes={reorderNodes} deleteNode={deleteNode} />
+          <NodeGraph nodes={nodes} moveNode={moveNode} reorderNodes={reorderNodes} deleteNode={deleteNode} updateNodeInput={updateNodeInput} updateNodeDropdown={updateNodeDropdown} updateNodeName={updateNodeName} />
         </div>
         <div className="input-container">
           <input 

@@ -6,7 +6,7 @@
 
 .node-container {
   overflow-y: auto;
-  height: 400px;
+  height: 600px;
   width: 100%;
   border: 1px solid #cccccc;
   border-radius: 8px;
@@ -48,7 +48,7 @@
 foreignObject div {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   background-color: #007bff;
   color: #ffffff;
   border-radius: 8px;
